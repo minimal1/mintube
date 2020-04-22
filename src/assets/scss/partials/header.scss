@@ -1,0 +1,60 @@
+/** @format */
+
+.header {
+  background-color: $red;
+  margin-bottom: 50px;
+  padding: 0 10px;
+  .header__wrapper {
+    padding: 5px 0px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+
+    .header__column {
+      i {
+        color: white;
+        font-size: 30px;
+      }
+
+      &:nth-child(2) {
+        width: 100%;
+        justify-self: center;
+      }
+
+      &:last-child {
+        justify-self: end;
+      }
+
+      ul {
+        display: flex;
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+
+        li:not(:last-child) {
+          margin-right: 15px;
+        }
+      }
+
+      form {
+        width: 100%;
+        input {
+          width: 100%;
+          padding: 7px 10px;
+          font-size: 14px;
+          font-weight: 600;
+          color: $black;
+          border-radius: 5px;
+
+          &::placeholder {
+            font-weight: 300;
+            color: rgba(0, 0, 0, 0.7);
+          }
+        }
+      }
+    }
+  }
+}
