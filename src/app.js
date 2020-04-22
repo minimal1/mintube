@@ -1,6 +1,4 @@
 /** @format */
-import "@babel/polyfill";
-
 import express from "express";
 import pug from "pug";
 import morgan from "morgan";

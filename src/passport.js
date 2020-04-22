@@ -2,7 +2,8 @@
 
 import passport from "passport";
 import GithubStrategy from "passport-github";
-import FacebookStrategy from "passport-kakao";
+import KakaoStrategy from "passport-kakao";
+import FacebookStrategy from "passport-facebook";
 import User from "./models/User";
 import {
   githubLoginCallBack,
@@ -20,18 +21,22 @@ passport.use(
     {
       clientID: process.env.GH_CLIENT_ID,
       clientSecret: process.env.GH_CLIENT_SECRET,
-      callbackURL: `http://localhost:4000${routes.githubCallBack}`,
+      callbackURL: process.env.PRODUCTION
+        ? `https://aqueous-wave-87478.herokuapp.com${routes.githubCallBack}`
+        : `http://localhost:4000${routes.githubCallBack}`,
     },
     githubLoginCallBack
   )
 );
 
 passport.use(
-  new FacebookStrategy(
+  new KakaoStrategy(
     {
       clientID: process.env.KT_CLIENT_ID,
       clientSecret: process.env.KT_CLIENT_SECRET,
-      callbackURL: `http://localhost:4000${routes.kakaoCallBack}`,
+      callbackURL: process.env.PRODUCTION
+        ? `https://aqueous-wave-87478.herokuapp.com${routes.kakaoCallBack}`
+        : `http://localhost:4000${routes.kakaoCallBack}`,
     },
     kakaoLoginCallBack
   )

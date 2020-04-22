@@ -1,4 +1,5 @@
 /** @format */
+import "@babel/polyfill";
 
 import dotenv from "dotenv";
 import "./db";
