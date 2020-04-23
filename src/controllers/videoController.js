@@ -47,16 +47,21 @@ export const postUpload = async (req, res) => {
     body: { title, description },
     file: { location },
   } = req;
-
-  const newVideo = await Video.create({
-    fileUrl: location,
-    title: title,
-    description: description,
-    creator: req.user.id,
-  });
-  req.user.videos.push(newVideo.id);
-  req.user.save();
-  res.redirect(routes.videoDetail(newVideo.id));
+  try {
+    const newVideo = await Video.create({
+      fileUrl: location,
+      title: title,
+      description: description,
+      creator: req.user.id,
+    });
+    req.user.videos.push(newVideo.id);
+    req.user.save();
+    req.flash("success", "Video uploaded");
+    res.redirect(routes.videoDetail(newVideo.id));
+  } catch (error) {
+    req.flash("error", "Can't upload video");
+    res.redirect(routes.home);
+  }
 };
 
 export const videoDetail = async (req, res) => {
@@ -69,6 +74,7 @@ export const videoDetail = async (req, res) => {
       .populate("comments");
     res.render("videoDetail", { pageTitle: video.title, video });
   } catch (error) {
+    req.flash("error", "Video not found");
     res.redirect(routes.home);
   }
 };
@@ -98,8 +104,10 @@ export const postEditVideo = async (req, res) => {
 
   try {
     await Video.findOneAndUpdate({ _id: id }, { title, description });
+    req.flash("success", "Video updated");
     res.redirect(routes.videoDetail(id));
   } catch (error) {
+    req.flash("error", "Can't update video");
     res.redirect(routes.home);
   }
 };

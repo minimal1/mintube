@@ -10,6 +10,7 @@ import passport from "passport";
 import path from "path";
 import MongoStore from "connect-mongo";
 import mongoose from "mongoose";
+import flash from "express-flash";
 import globalRouter from "./routers/globalRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouters";
@@ -39,6 +40,7 @@ app.use(
   })
 );
 
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(localMiddleware);
